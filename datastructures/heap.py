@@ -38,9 +38,6 @@ class Heap:
     def __getitem__(self, idx):
         return self.A[idx]
 
-    def get_heap_size(self, A):
-        return 1
-
     def parent(self, i):
         return floor(i / 2)
 

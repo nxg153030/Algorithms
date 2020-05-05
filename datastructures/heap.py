@@ -80,9 +80,9 @@ class Heap:
             smallest = r
         if smallest != i:
             temp = self.A[i]
-            self.A[i] = self.A[largest]
-            self.A[largest] = temp
-            self.max_heapify(largest)
+            self.A[i] = self.A[smallest]
+            self.A[smallest] = temp
+            self.min_heapify(smallest)
 
     def build_min_heap(self):
         for i in range(floor(len(self.A) / 2), -1, -1):
@@ -100,4 +100,6 @@ if __name__ == "__main__":
     # A = OffsetList([1, 2, 3, 4, 7, 8, 9, 10, 14, 16])
     heap = Heap(A)
     heap.build_max_heap()
+    print(str(heap))
+    heap.build_min_heap()
     print(str(heap))

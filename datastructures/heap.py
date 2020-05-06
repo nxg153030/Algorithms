@@ -93,7 +93,6 @@ if __name__ == "__main__":
     A = [-10, -20, -30, -40, -50, -60]
     A = [-1, -2, -3, -4, -7, -8, -9, -10, -14, -16]
     # A = random.sample(range(10,1000), 10)
-    # A_copy = A.copy()
     # start = time.time()
     # heapify(A)
     # print(A)
@@ -103,8 +102,7 @@ if __name__ == "__main__":
     A = [20, 1, 34, 23, 15, 10, 5, 6, 3, 9]
     start = time.time()
     heap = Heap(A)
-    # heap.build_min_heap()
-    heap.heapsort()
+    heap.build_max_heap()
     print(str(heap))
     end = time.time()
     print(f'Time taken to heapify list of {len(A)} elements: {end - start} seconds')

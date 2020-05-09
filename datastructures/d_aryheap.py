@@ -48,18 +48,14 @@ class DHeap:
             self.max_heapify(i)
 
     def min_heapify(self, i):
-        l = self.left(i)
-        r = self.right(i)
-        if l < self.heap_size and self.A[l] < self.A[i]:
-            smallest = l
-        else:
-            smallest = i
-        if r < self.heap_size and self.A[r] < self.A[smallest]:
-            smallest = r
+        current_node_level_dict = {}
+        for n in range(self.num_children):
+            if (2 * i) + (n + 1) < self.heap_size:
+                current_node_level_dict.update({(2 * i) + (n + 1): self.A[(2 * i) + (n + 1)]})
+        current_node_level_dict.update({i: self.A[i]})
+        smallest = min(current_node_level_dict, key=current_node_level_dict.get)
         if smallest != i:
-            temp = self.A[i]
-            self.A[i] = self.A[smallest]
-            self.A[smallest] = temp
+            self.A[i], self.A[smallest] = self.A[smallest], self.A[i]
             self.min_heapify(smallest)
 
     def build_min_heap(self):
@@ -84,7 +80,7 @@ if __name__ == "__main__":
     A = [1, 2, 3, 4, 7, 8, 9, 10, 14, 16]
     start = time.time()
     heap = DHeap(A, num_children=5)
-    heap.build_max_heap()
+    heap.build_min_heap()
     LOGGER.debug(str(heap))
     end = time.time()
     LOGGER.debug(f'Time taken to heapify list of {len(A)} elements: {end - start} seconds')

@@ -1,14 +1,12 @@
 from typing import List
-from datastructures.heap import Heap
+from datastructures import Heap
 
 
 def heapsort(A: List):
     heap = Heap(A)
     heap.build_max_heap()
     for i in reversed(range(1, heap.heap_size)):
-        temp = heap[0]
-        heap[0] = heap[i]
-        heap[i] = temp
+        heap[0], heap[i] = heap[i], heap[0]
         heap.heap_size -= 1
         heap.max_heapify(0)
     return str(heap)

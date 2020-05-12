@@ -93,6 +93,8 @@ if __name__ == "__main__":
     start = time.time()
     heap = Heap(A)
     heap.build_max_heap()
+    for elem in heap:
+        print(elem)
     LOGGER.debug(str(heap))
     end = time.time()
     LOGGER.debug(f'Time taken to heapify list of {len(A)} elements: {end - start} seconds')

@@ -1,9 +1,12 @@
 from typing import List
-from math import floor
+from math import floor, ceil, log2
 import time
 import logging
+import networkx as nx
+import matplotlib.pyplot as plt
+import numpy as np
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 LOGGER = logging.getLogger(__name__)
 LOGGER.setLevel(logging.DEBUG)
 
@@ -28,6 +31,24 @@ class DHeap:
 
     def __getitem__(self, idx):
         return self.A[idx]
+
+    @staticmethod
+    def parent(i, num_children):
+        return floor((i - 1) / num_children)
+
+    @staticmethod
+    def height(heap_size, num_children, node_idx):
+        if (2 * node_idx) + 1 >= heap_size:
+            return 0
+        for n in range(num_children):
+            if (2 * node_idx) + (n + 1) < heap_size:
+                return 1 + DHeap.height(heap_size, num_children, (2 * node_idx) + (n + 1))
+
+    @staticmethod
+    def depth(node_idx, num_children):
+        if node_idx == 0:
+            return 0
+        return 1 + DHeap.depth(DHeap.parent(node_idx, num_children), num_children)
 
     def max_heapify(self, i):
         current_node_level_dict = {}
@@ -65,22 +86,84 @@ class DHeap:
         for i in range(floor(len(self.A) / 2), -1, -1):
             self.min_heapify(i)
 
+    @staticmethod
+    def visualize_heap(heap):
+        G = nx.Graph()
+        # get the depth for all the nodes
+        # then plot the nodes by depth
+        node_depth_mappings = [[] for _ in range(ceil(log2(len(heap))))]
+        print(node_depth_mappings)
+        for i in range(len(heap)):
+            depth = DHeap.depth(i, heap.num_children)
+            node_depth_mappings[depth].append(heap[i])
+        print(node_depth_mappings)
+        x, y = (5, 8)
+        for mapping in node_depth_mappings:
+            if len(mapping) > 0:
+                for node in mapping:
+                    G.add_node(node, pos=(x, y))
+                    x += 2
+                y -= 1
+
+        print(node_depth_mappings)
+        for i, elem in enumerate(heap):
+            for n in range(heap.num_children):
+                if (2 * i) + (n + 1) < heap.heap_size:
+                    print(f'Adding edge between {elem} and {heap[(2 * i) + (n + 1)]}')
+                    G.add_edge(elem, heap[(2 * i) + (n + 1)])
+
+        pos = nx.get_node_attributes(G, 'pos')
+        nx.draw_networkx(G, pos, with_labels=True)
+        plt.show()
+
+    @staticmethod
+    def _visualize_heap(heap):
+        G = nx.Graph()
+        x, y = (5, 8)
+        for i in range(heap.heap_size):
+            # node_height = DHeap.height(heap.heap_size, heap.num_children, i)
+            # if node_height == 3:
+            #     y = 9
+            #     x = 5
+            if i == 0:
+                G.add_node(heap[i], pos=(x, y))
+                G.add_node(heap[(2 * i) + 1], pos=(4.5, 7.5))
+                G.add_node(heap[(2 * i) + 2], pos=(5.5, 7.5))
+            elif i == 1:
+                G.add_node(heap[(2 * i) + 1], pos=(3, 7))
+                G.add_node(heap[(2 * i) + 2], pos=(4, 7))
+            elif i == 2:
+                G.add_node(heap[(2 * i) + 1], pos=(5, 7))
+                G.add_node(heap[(2 * i) + 2], pos=(6, 7))
+            elif i == 3:
+                G.add_node(heap[(2 * i) + 1], pos=(1, 6.5))
+                G.add_node(heap[(2 * i) + 2], pos=(2, 6.5))
+            elif i == 4:
+                G.add_node(heap[(2 * i) + 1], pos=(3, 6.5))
+
+        for i, elem in enumerate(heap):
+            for n in range(heap.num_children):
+                if (2 * i) + (n + 1) < heap.heap_size:
+                    print(f'Adding edge between {elem} and {heap[(2 * i) + (n + 1)]}')
+                    G.add_edge(elem, heap[(2 * i) + (n + 1)])
+
+        pos = nx.get_node_attributes(G, 'pos')
+        nx.draw_networkx(G, pos, with_labels=True)
+        plt.show()
+
 
 if __name__ == "__main__":
-    # A = [-10, -20, -30, -40, -50, -60]
-    # A = [-1, -2, -3, -4, -7, -8, -9, -10, -14, -16]
-    # A = random.sample(range(10,1000), 10)
-    # start = time.time()
-    # heapify(A)
-    # print(A)
-    # end = time.time()
-    # print(f'Time taken to heapify list of {len(A)} elements: {end-start} seconds')
-    # A = OffsetList([1, 2, 3, 4, 7, 8, 9, 10, 14, 16])
-    A = [20, 1, 34, 23, 15, 10, 5, 6, 3, 9]
-    A = [1, 2, 3, 4, 7, 8, 9, 10, 14, 16]
+    A = [1, 2, 3, 4, 7, 5, 6, 10, 9, 8]
     start = time.time()
-    heap = DHeap(A, num_children=5)
-    heap.build_min_heap()
-    LOGGER.debug(str(heap))
+    dheap = DHeap(A, num_children=2)
+    dheap.build_max_heap()
+    node_index = 9
+    # n_children = 2
+    # print(f'Height of node {str(node_index)}: {dheap.height(dheap.heap_size, dheap.num_children, node_index)}')
+    # print(f'Depth of node {str(node_index)}: {DHeap.depth(node_index, n_children)}')
+    for k in range(10):
+        print(f'Depth of node {k}: {DHeap.depth(k, 2)}')
+    LOGGER.debug(str(dheap))
     end = time.time()
     LOGGER.debug(f'Time taken to heapify list of {len(A)} elements: {end - start} seconds')
+    DHeap.visualize_heap(dheap)

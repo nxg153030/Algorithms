@@ -97,20 +97,19 @@ class DHeap:
             depth = DHeap.depth(i, heap.num_children)
             node_depth_mappings[depth].append(heap[i])
         print(node_depth_mappings)
-        x, y = (5, 8)
+        x, y = (10, 15)
         for mapping in node_depth_mappings:
             if len(mapping) > 0:
                 for node in mapping:
                     G.add_node(node, pos=(x, y))
-                    x += 2
-                y -= 1
+                    x += 0.5
+                y -= 0.5
 
-        print(node_depth_mappings)
         for i, elem in enumerate(heap):
             for n in range(heap.num_children):
-                if (2 * i) + (n + 1) < heap.heap_size:
-                    print(f'Adding edge between {elem} and {heap[(2 * i) + (n + 1)]}')
-                    G.add_edge(elem, heap[(2 * i) + (n + 1)])
+                if (heap.num_children * i) + (n + 1) < heap.heap_size:
+                    print(f'Adding edge between {elem} and {heap[(heap.num_children * i) + (n + 1)]}')
+                    G.add_edge(elem, heap[(heap.num_children * i) + (n + 1)])
 
         pos = nx.get_node_attributes(G, 'pos')
         nx.draw_networkx(G, pos, with_labels=True)
@@ -155,14 +154,9 @@ class DHeap:
 if __name__ == "__main__":
     A = [1, 2, 3, 4, 7, 5, 6, 10, 9, 8]
     start = time.time()
-    dheap = DHeap(A, num_children=2)
-    dheap.build_max_heap()
-    node_index = 9
-    # n_children = 2
-    # print(f'Height of node {str(node_index)}: {dheap.height(dheap.heap_size, dheap.num_children, node_index)}')
-    # print(f'Depth of node {str(node_index)}: {DHeap.depth(node_index, n_children)}')
-    for k in range(10):
-        print(f'Depth of node {k}: {DHeap.depth(k, 2)}')
+    dheap = DHeap(A, num_children=5)
+    dheap.build_min_heap()
+    print(f'max {dheap.num_children}-heap: {str(dheap)}')
     LOGGER.debug(str(dheap))
     end = time.time()
     LOGGER.debug(f'Time taken to heapify list of {len(A)} elements: {end - start} seconds')

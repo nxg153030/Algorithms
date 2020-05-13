@@ -98,9 +98,11 @@ class DHeap:
             node_depth_mappings[depth].append(heap[i])
         print(node_depth_mappings)
         x, y = (10, 15)
-        for mapping in node_depth_mappings:
+        for depth, mapping in enumerate(node_depth_mappings):
             if len(mapping) > 0:
-                for node in mapping:
+                for node_idx, node in enumerate(mapping):
+                    if depth > 0 and node_idx == 0:
+                        x -= 0.5
                     G.add_node(node, pos=(x, y))
                     x += 0.5
                 y -= 0.5
@@ -152,9 +154,9 @@ class DHeap:
 
 
 if __name__ == "__main__":
-    A = [1, 2, 3, 4, 7, 5, 6, 10, 9, 8]
+    A = [1, 2, 3, 4, 7, 5, 6, 10, 9, 8, 15, 20, 35, 44]
     start = time.time()
-    dheap = DHeap(A, num_children=5)
+    dheap = DHeap(A, num_children=2)
     dheap.build_min_heap()
     print(f'max {dheap.num_children}-heap: {str(dheap)}')
     LOGGER.debug(str(dheap))

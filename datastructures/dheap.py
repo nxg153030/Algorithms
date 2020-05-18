@@ -156,7 +156,7 @@ class DHeap:
 if __name__ == "__main__":
     A = [1, 2, 3, 4, 7, 5, 6, 10, 9, 8, 15, 20, 35, 44]
     start = time.time()
-    dheap = DHeap(A, num_children=2)
+    dheap = DHeap(A, num_children=5)
     dheap.build_min_heap()
     print(f'max {dheap.num_children}-heap: {str(dheap)}')
     LOGGER.debug(str(dheap))

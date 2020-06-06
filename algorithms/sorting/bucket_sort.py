@@ -1,5 +1,4 @@
 from math import floor
-import numpy as np
 from itertools import chain
 
 
@@ -21,11 +20,12 @@ def bucket_sort(arr):
 
     :return:
     """
-    n = arr.shape[0]
-    buckets = [[] for _ in range(0, n)]
-
-    for i in range(1, n):
-        buckets[floor(n * arr[i])].append(arr[i])
+    max_val = max(arr)
+    buckets = [[] for _ in range(0, len(arr))]
+    n = len(arr)
+    for num in arr:
+        idx = floor(num / max_val)
+        buckets[idx].append(num)
 
     for i in range(0, n):
         insertion_sort(buckets[i])
@@ -34,7 +34,6 @@ def bucket_sort(arr):
 
 
 if __name__ == '__main__':
-    A = np.random.uniform(0, 1, 10)
-    print(A.shape[0])
-    bucket_sort(A)
-    print(A)
+    A = [10, 5, 2, 3, 1, 7, 8, 9, 6, 4]
+    output = bucket_sort(A)
+    print(output)

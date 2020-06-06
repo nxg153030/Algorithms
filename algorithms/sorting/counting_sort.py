@@ -1,27 +1,30 @@
-def counting_sort(A):
+from typing import List
+
+
+def counting_sort(arr: List):
     """
     Counting sort assumes that the input consists on integers in a small range.
-    :param A: input array
+    :param arr: input array
     :return:
     """
-    k = max(A)
+    k = max(arr)
     C = [0] * (k + 1) # temp array
-    B = [0] * len(A)
-    for j in range(len(A)):
+    B = [0] * len(arr)
+    for j in range(len(arr)):
         C[A[j]] += 1 # C[i] now contains the no. of elements = i
 
     for i in range(1, k + 1):
         C[i] += C[i - 1]  # C[i] now contains the no. of elements <= i
 
-    for j in range(len(A) - 1, -1, -1):
-        B[C[A[j]] - 1] = A[j]
-        C[A[j]] -= 1
+    for j in range(len(arr) - 1, -1, -1):
+        B[C[arr[j]] - 1] = arr[j]
+        C[arr[j]] -= 1
 
-    A[:] = B
+    arr[:] = B
 
 
 if __name__ == '__main__':
-    arr = [2, 5, 3, 0, 2, 3, 0, 3]
+    A = [2, 5, 3, 0, 2, 3, 0, 3]
     # A = [100, 40, 24, 34, 33, 12, 17]
-    counting_sort(arr)
-    print(arr)
+    counting_sort(A)
+    print(A)

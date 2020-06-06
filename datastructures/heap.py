@@ -80,15 +80,6 @@ class Heap:
 
 
 if __name__ == "__main__":
-    A = [-10, -20, -30, -40, -50, -60]
-    A = [-1, -2, -3, -4, -7, -8, -9, -10, -14, -16]
-    # A = random.sample(range(10,1000), 10)
-    # start = time.time()
-    # heapify(A)
-    # print(A)
-    # end = time.time()
-    # print(f'Time taken to heapify list of {len(A)} elements: {end-start} seconds')
-    # A = OffsetList([1, 2, 3, 4, 7, 8, 9, 10, 14, 16])
     A = [20, 1, 34, 23, 15, 10, 5, 6, 3, 9]
     start = time.time()
     heap = Heap(A)

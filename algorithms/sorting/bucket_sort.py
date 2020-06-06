@@ -1,8 +1,9 @@
 from math import floor
 from itertools import chain
+from typing import List
 
 
-def insertion_sort(arr):
+def insertion_sort(arr: List):
     for i in range(1, len(arr)):
         key = A[i]
         j = i - 1

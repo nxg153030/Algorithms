@@ -1,5 +1,4 @@
-def depth_first_search():
-    pass
+from algorithms.search import depth_first_search
 
 
 def topological_sort(G):

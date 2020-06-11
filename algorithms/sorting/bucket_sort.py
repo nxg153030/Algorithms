@@ -5,7 +5,7 @@ from typing import List
 
 def insertion_sort(arr: List):
     for i in range(1, len(arr)):
-        key = A[i]
+        key = arr[i]
         j = i - 1
         # insert A[i] into the sorted sequence A[0..i-1]
         while j >= 0 and arr[j] > key:

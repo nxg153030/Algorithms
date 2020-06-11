@@ -11,7 +11,7 @@ def counting_sort(arr: List):
     C = [0] * (k + 1) # temp array
     B = [0] * len(arr)
     for j in range(len(arr)):
-        C[A[j]] += 1 # C[i] now contains the no. of elements = i
+        C[arr[j]] += 1 # C[i] now contains the no. of elements = i
 
     for i in range(1, k + 1):
         C[i] += C[i - 1]  # C[i] now contains the no. of elements <= i

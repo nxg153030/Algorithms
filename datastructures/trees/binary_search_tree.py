@@ -22,11 +22,49 @@ class BinarySearchTree:
     def build_tree(self):
         pass
 
-    def insert(self, val):
-        pass
+    def insert(self, node_z):
+        y = None
+        x = self.root
+        while x is not None:
+            y = x
+            if node_z.val < x.val:
+                x = x.left
+            else:
+                x = x.right
+        node_z.parent = y
 
-    def delete(self, val):
-        pass
+        if y is None:
+            self.root = node_z
+        elif node_z.val < y.val:
+            y.left = node_z
+        else:
+            y.right = node_z
+
+    def delete(self, node_z):
+        if node_z.left is None:
+            self.transplant(node_z, node_z.right)
+        elif node_z.right is None:
+            self.transplant(node_z, node_z.left)
+        else:
+            y = BinarySearchTree.minimum(node_z.right)
+            if y.parent != node_z:
+                self.transplant(y, y.right)
+                y.right = node_z.right
+                y.right.parent = y
+            self.transplant(node_z, y)
+            y.left = node_z.left
+            y.left.parent = y
+
+    def transplant(self, u, v):
+        if u.parent is None:
+            self.root = v
+        elif u == u.parent.left:
+            u.parent.left = v
+        else:
+            u.parent.right = v
+
+        if v is not None:
+            v.parent = u.parent
 
     def search(self, node: TreeNode, val):
         """
@@ -34,7 +72,15 @@ class BinarySearchTree:
         :param val: value of the node to look up
         :return: index corresponding to the node, return -1 if node does not exist
         """
-        pass
+        current = self.root
+        while current is not None:
+            if current.val == val:
+                return current
+            elif val > current.val:
+                current = current.right
+            else:
+                current = current.left
+        return None
 
     def preorder(self, node):
         if node is not None:

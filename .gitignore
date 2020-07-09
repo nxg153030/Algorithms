@@ -1,6 +1,10 @@
 .DS_Store
 venv/
 .idea/
+algorithms/search/__pycache__
 datastructures/__pycache__
+tests/__pycache__
+tests/algorithms/__pycache__
+tests/algorithms/search/__pycache__
 notebooks/.ipynb_checkpoints
 .pytest_cache

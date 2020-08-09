@@ -12,6 +12,9 @@ Through this project, I hope to leverage python's visualization libraries to sim
   <li> Run `pip install jupyterlab`. At this point, you should have all the necessary libraries required to run `JupyterLab` on your virtual environment. Now, enter `jupyter lab` and that should open up a fresh JupyterLab session on your web browser. </li>
 </ol>
 
+
+# Algorithms with visualizations
+
 1. Djikstra's shortest path
 
   ![Djikstra](/imgs/djikstra.png)

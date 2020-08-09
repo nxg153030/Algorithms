@@ -12,8 +12,7 @@ Through this project, I hope to leverage python's visualization libraries to sim
 At this point, you should have all the necessary libraries required to run `JupyterLab` on your virtual environment. Now, enter `jupyter lab` and that should open up a fresh JupyterLab session on your web browser.
 
 
-Algorithms list
-1. Djikstra
+1. Djikstra's shortest path algorithm
 
 ![Djikstra](/imgs/djikstra.png)
 

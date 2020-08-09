@@ -10,3 +10,11 @@ Through this project, I hope to leverage python's visualization libraries to sim
 5. Run `python -m ipykernel install --name=venv`
 6. Run `pip install jupyterlab`
 At this point, you should have all the necessary libraries required to run `JupyterLab` on your virtual environment. Now, enter `jupyter lab` and that should open up a fresh JupyterLab session on your web browser.
+
+
+Algorithms list
+1. Djikstra
+![Djikstra](/imgs/djikstra.png)
+
+2. D-Heap
+![DHeap](/imgs/dheap.png)

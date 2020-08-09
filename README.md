@@ -14,7 +14,9 @@ At this point, you should have all the necessary libraries required to run `Jupy
 
 Algorithms list
 1. Djikstra
+
 ![Djikstra](/imgs/djikstra.png)
 
 2. D-Heap
+
 ![DHeap](/imgs/dheap.png)

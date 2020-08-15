@@ -1,6 +1,3 @@
-from typing import List
-
-
 class TreeNode:
     def __init__(self, val, left=None, right=None):
         self.val = val
@@ -15,14 +12,16 @@ class BinarySearchTree:
     """
     construct Binary Search Tree from list
     """
-    def __init__(self, l: List = []):
+    def __init__(self, l=None):
+        if l is None:
+            l = []
         self.l = l
         self.root = None
 
     def build_tree(self):
         pass
 
-    def insert(self, node_z):
+    def insert(self, node_z: TreeNode):
         y = None
         x = self.root
         while x is not None:
@@ -40,7 +39,7 @@ class BinarySearchTree:
         else:
             y.right = node_z
 
-    def delete(self, node_z):
+    def delete(self, node_z: TreeNode):
         if node_z.left is None:
             self.transplant(node_z, node_z.right)
         elif node_z.right is None:
@@ -55,7 +54,7 @@ class BinarySearchTree:
             y.left = node_z.left
             y.left.parent = y
 
-    def transplant(self, u, v):
+    def transplant(self, u: TreeNode, v: TreeNode):
         if u.parent is None:
             self.root = v
         elif u == u.parent.left:
@@ -82,38 +81,38 @@ class BinarySearchTree:
                 current = current.left
         return None
 
-    def preorder(self, node):
+    def preorder(self, node: TreeNode):
         if node is not None:
             print(str(node))
             self.preorder(node.left)
             self.preorder(node.right)
 
-    def inorder(self, node):
+    def inorder(self, node: TreeNode):
         if node is not None:
             self.inorder(node.left)
             print(str(node))
             self.inorder(node.right)
 
-    def postorder(self, node):
+    def postorder(self, node: TreeNode):
         if node is not None:
             self.postorder(node.left)
             self.postorder(node.right)
             print(str(node))
 
     @staticmethod
-    def maximum(node):
+    def maximum(node: TreeNode):
         while node.right is not None:
             node = node.right
         return node
 
     @staticmethod
-    def minimum(node):
+    def minimum(node: TreeNode):
         while node.left is not None:
             node = node.left
         return node
 
     @staticmethod
-    def parent(root, node):
+    def parent(root: TreeNode, node: TreeNode):
         current = root
         while current is not None:
             if (current.left is not None and current.left.val == node.val) or \
@@ -125,7 +124,7 @@ class BinarySearchTree:
                 current = current.right
         return current
 
-    def predecessor(self, root, node):
+    def predecessor(self, root: TreeNode, node: TreeNode):
         """smallest node with val lesser than the node"""
         if node.left is not None:
             return BinarySearchTree.maximum(node.left)
@@ -146,22 +145,38 @@ class BinarySearchTree:
             temp = BinarySearchTree.parent(root, temp)
         return temp
 
+    def print_tree(self, root: TreeNode):
+        current = root
+        queue = [current]
+        while queue:
+            current = queue.pop()
+            print(current.val)
+            if current.left is not None:
+                print('/', end='')
+                queue.insert(0, current.left)
+            print('      ', end='')
+            if current.right is not None:
+                print('\\')
+                queue.insert(0, current.right)
+
 
 if __name__ == '__main__':
-    root = TreeNode(val=15)
-    root.left = TreeNode(val=6)
-    root.right = TreeNode(val=18)
-    root.left.left = TreeNode(val=3)
-    root.left.right = TreeNode(val=7)
-    root.left.left.left = TreeNode(val=2)
-    root.left.left.right = TreeNode(val=4)
-    root.left.right.right = TreeNode(val=13)
-    root.left.right.left = TreeNode(val=9)
+    _root = TreeNode(val=15)
+    _root.left = TreeNode(val=6)
+    _root.right = TreeNode(val=18)
+    _root.left.left = TreeNode(val=3)
+    _root.left.right = TreeNode(val=7)
+    _root.left.left.left = TreeNode(val=2)
+    _root.left.left.right = TreeNode(val=4)
+    _root.left.right.right = TreeNode(val=13)
+    _root.left.right.left = TreeNode(val=9)
     bst = BinarySearchTree()
     # res = bst.predecessor(root, root.right)
     # print(str(res))
-    bst.preorder(root)
+    bst.preorder(_root)
     print('===========')
-    bst.inorder(root)
+    bst.inorder(_root)
     print('===========')
-    bst.postorder(root)
+    bst.postorder(_root)
+    print('\n\n\n')
+    print(bst.print_tree(_root))

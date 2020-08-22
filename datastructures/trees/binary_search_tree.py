@@ -145,19 +145,33 @@ class BinarySearchTree:
             temp = BinarySearchTree.parent(root, temp)
         return temp
 
+    def height(self, node):
+        if node is None or (node.left is None and node.right is None):
+            return 0
+        else:
+            return 1 + max(self.height(node.left), self.height(node.right))
+
+    def depth(self, node):
+        pass
+
     def print_tree(self, root: TreeNode):
         current = root
-        queue = [current]
+        level = 0
+        queue = [(current, level)]
         while queue:
             current = queue.pop()
-            print(current.val)
-            if current.left is not None:
+            if current[1] < level:
+                print(current[0].val, end='')
+            else:
+                print(current[0].val)
+            if current[0].left is not None:
                 print('/', end='')
-                queue.insert(0, current.left)
+                queue.insert(0, (current[0].left, level + 1))
             print('      ', end='')
-            if current.right is not None:
-                print('\\')
-                queue.insert(0, current.right)
+            if current[0].right is not None:
+                print('\\', end='')
+                queue.insert(0, (current[0].right, level + 1))
+            level += 1
 
 
 if __name__ == '__main__':
@@ -179,4 +193,5 @@ if __name__ == '__main__':
     print('===========')
     bst.postorder(_root)
     print('\n\n\n')
-    print(bst.print_tree(_root))
+    print(bst.height(_root))
+    # print(bst.print_tree(_root))

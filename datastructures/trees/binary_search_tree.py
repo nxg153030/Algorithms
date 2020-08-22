@@ -4,6 +4,9 @@ class TreeNode:
         self.left = left
         self.right = right
 
+    def __repr__(self):
+        return f'Node: {self.val}'
+
     def __str__(self):
         return str(self.val)
 
@@ -145,33 +148,48 @@ class BinarySearchTree:
             temp = BinarySearchTree.parent(root, temp)
         return temp
 
-    def height(self, node):
+    def height(self, node: TreeNode) -> int:
         if node is None or (node.left is None and node.right is None):
             return 0
         else:
             return 1 + max(self.height(node.left), self.height(node.right))
 
-    def depth(self, node):
-        pass
+    def get_depths(self, root: TreeNode):
+        level = 0
+        temp_queue = [(root, level)]
+        queue = temp_queue.copy()
+        while temp_queue:
+            current = temp_queue.pop(0)
+            if current[0].left is not None:
+                temp_queue.insert(0, (current[0].left, current[1] + 1))
+                queue.insert(0, (current[0].left, current[1] + 1))
+            if current[0].right is not None:
+                temp_queue.insert(0, (current[0].right, current[1] + 1))
+                queue.insert(0, (current[0].right, current[1] + 1))
+
+        return queue
 
     def print_tree(self, root: TreeNode):
         current = root
-        level = 0
-        queue = [(current, level)]
-        while queue:
-            current = queue.pop()
-            if current[1] < level:
-                print(current[0].val, end='')
-            else:
-                print(current[0].val)
-            if current[0].left is not None:
-                print('/', end='')
-                queue.insert(0, (current[0].left, level + 1))
-            print('      ', end='')
-            if current[0].right is not None:
-                print('\\', end='')
-                queue.insert(0, (current[0].right, level + 1))
-            level += 1
+        queue = self.get_depths(current)
+        queue.sort(key=lambda x: x[1])
+        i = 0
+        current_level = 0
+        nodes_at_level = 0
+        while i < len(queue):
+            if i == 0:
+                print('    ', end='')
+            if nodes_at_level == 1:
+                print('     ', end='')
+            if queue[i][1] > current_level:
+                print()
+                current_level = queue[i][1]
+                nodes_at_level = 0
+            print(queue[i][0].val, end=' ')
+            nodes_at_level += 1
+            i += 1
+
+        # print(queue)
 
 
 if __name__ == '__main__':
@@ -187,11 +205,11 @@ if __name__ == '__main__':
     bst = BinarySearchTree()
     # res = bst.predecessor(root, root.right)
     # print(str(res))
-    bst.preorder(_root)
-    print('===========')
-    bst.inorder(_root)
-    print('===========')
-    bst.postorder(_root)
-    print('\n\n\n')
-    print(bst.height(_root))
-    # print(bst.print_tree(_root))
+    # bst.preorder(_root)
+    # print('===========')
+    # bst.inorder(_root)
+    # print('===========')
+    # bst.postorder(_root)
+    # print('\n\n\n')
+    # print(bst.height(_root))
+    print(bst.print_tree(_root))

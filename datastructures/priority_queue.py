@@ -54,7 +54,7 @@ class PriorityQueue(Heap):
             raise Exception('new key is bigger than current key')
 
         self.A[i] = key
-        while i > 0 and self.A[i] < self.A[self.parent(i)]:
+        while i > 0 and self.A[self.parent(i)] > self.A[i]:
             self.A[i], self.A[self.parent(i)] = self.A[self.parent(i)], self.A[i]
             i = self.parent(i)
 

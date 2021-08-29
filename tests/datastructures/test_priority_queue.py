@@ -32,6 +32,7 @@ def test_max_priority_queue_insert(test_input):
     queue = PriorityQueue(copy.deepcopy(test_input))
     queue.build_max_heap()
     queue.max_heap_insert(100)
+    assert queue.heap_size == len(test_input) + 1
     assert queue.heap_extract_max() == 100
 
 
@@ -40,7 +41,11 @@ def test_min_priority_queue_insert(test_input):
     queue = PriorityQueue(copy.deepcopy(test_input))
     queue.build_min_heap()
     queue.min_heap_insert(0)
+    assert queue.heap_size == len(test_input) + 1
     assert queue.heap_extract_min() == 0
+    queue.min_heap_insert(1.5)
+    assert queue.heap_size == len(test_input) + 1
+    assert queue.heap_extract_min() == 1
 
 
 

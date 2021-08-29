@@ -1,8 +1,6 @@
 from typing import List
 from math import floor
-from heapq import heapify
 import time
-import random
 import logging
 
 logging.basicConfig(level=logging.DEBUG)

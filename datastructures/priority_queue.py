@@ -28,6 +28,7 @@ class PriorityQueue(Heap):
         _min = self.A[0]
         self.A[0] = self.A[self.heap_size - 1]
         self.heap_size -= 1
+        self.A = self.A[:self.heap_size]
         self.min_heapify(0)
         return _min
 

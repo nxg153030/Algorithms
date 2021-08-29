@@ -1,5 +1,4 @@
 from datastructures import PriorityQueue
-from collections import deque
 import logging
 
 logging.basicConfig(level=logging.DEBUG)
@@ -53,6 +52,7 @@ def huffman(characters):
     return queue.heap_extract_min()
 
 
+# https://www.geeksforgeeks.org/print-path-root-given-node-binary-tree/
 def has_path(root, codeword_arr, codeword, key):
     if not root:
         return False

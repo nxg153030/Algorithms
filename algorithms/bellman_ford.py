@@ -56,6 +56,7 @@ class BellmanFord:
                         self.relax(i, j)
 
         # negative cycle check
+        # if a node can still be relaxed, it indicates the existence of a negative cycle
         for i in range(1, self.num_vertices):
             for j in range(self.num_vertices):
                 # triangle inequality check
